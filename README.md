@@ -20,31 +20,3 @@ The project implements a fully reactive data flow: a greeting text is stored loc
 1. **Dependency Injection Module (`DatabaseModule.kt`):** Automatically provisions singletons for the Room Database, DAO, and Repository classes using `SingletonComponent`, completely eliminating boilerplate viewmodel factories.
 2. **First-Launch Seeding:** Uses Room's `RoomDatabase.Callback` tied with a Hilt `Provider<GreetingDao>` proxy to safely insert default data *only* on the absolute first launch, preventing data overwrites on subsequent cold starts.
 
-┌────────────────────────────────────────────────────────┐
-│                      UI LAYER                          │
-│                                                        │
-│  ┌────────────────────────┐    ┌────────────────────┐  │
-│  │     GreetingScreen     │───>│  GreetingViewModel │  │
-│  │   (Jetpack Compose)    │<───│    (StateFlow)     │  │
-│  └────────────────────────┘    └────────────────────┘  │
-└───────────────────────────────────┬────────────────────┘
-│
-▼ (Hilt Injection)
-┌────────────────────────────────────────────────────────┐
-│                  DOMAIN / DATA LAYER                   │
-│                                                        │
-│                  ┌────────────────────┐                │
-│                  │ GreetingRepository │                │
-│                  └─────────┬──────────┘                │
-│                            │ (Kotlin Flow)             │
-│                            ▼                           │
-│                  ┌────────────────────┐                │
-│                  │    GreetingDao     │                │
-│                  └─────────┬──────────┘                │
-│                            │                           │
-│                            ▼                           │
-│                  ┌────────────────────┐                │
-│                  │   Room Database    │                │
-│                  │     (SQLite)       │                │
-│                  └────────────────────┘                │
-└────────────────────────────────────────────────────────┘
