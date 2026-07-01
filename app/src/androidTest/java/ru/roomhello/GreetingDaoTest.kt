@@ -33,11 +33,11 @@ class GreetingDaoTest {
 
     @Test
     fun insertAndReadGreetings() = runBlocking {
-        val fakeGreeting = GreetingEntity(id = 1, message = "hello test")
+        val fakeGreeting = GreetingEntity(id = 1, message = "test GreetingDaoTest.insertAndReadGreetings")
 
         dao.insertGreeting(fakeGreeting)
 
         val result = dao.getGreeting().first()
-        assertEquals("hello test", result?.message)
+        assertEquals("test GreetingDaoTest.insertAndReadGreetings", result?.message)
     }
 }
